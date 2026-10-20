@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard - LMS</title>
-  <!-- Tailwind CSS CDN for modern styling -->
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Supabase JS Client CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -15,8 +15,8 @@
   <header class="bg-indigo-600 text-white shadow-md px-6 py-4 flex justify-between items-center">
     <h1 class="text-xl font-bold">LMS Admin Portal</h1>
     <div class="flex items-center space-x-4">
-      <span id="adminEmail" class="text-sm opacity-90">Loading admin...</span>
-      <button onclick="logout()" class="bg-indigo-700 hover:bg-indigo-800 text-sm px-3 py-1.5 rounded transition">Logout</button>
+      <span id="adminEmail" class="text-sm bg-indigo-700 px-3 py-1 rounded">Checking session...</span>
+      <button onclick="logout()" class="bg-indigo-800 hover:bg-indigo-900 text-sm px-3 py-1.5 rounded transition">Logout</button>
     </div>
   </header>
 
@@ -38,19 +38,19 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <p class="text-sm text-gray-500 font-medium">Total Teachers</p>
-            <p id="statTeachers" class="text-3xl font-bold text-indigo-600 mt-2">-</p>
+            <p id="statTeachers" class="text-3xl font-bold text-indigo-600 mt-2">0</p>
           </div>
           <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <p class="text-sm text-gray-500 font-medium">Total Students</p>
-            <p id="statStudents" class="text-3xl font-bold text-indigo-600 mt-2">-</p>
+            <p id="statStudents" class="text-3xl font-bold text-indigo-600 mt-2">0</p>
           </div>
           <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <p class="text-sm text-gray-500 font-medium">Total Classes</p>
-            <p id="statClasses" class="text-3xl font-bold text-indigo-600 mt-2">-</p>
+            <p id="statClasses" class="text-3xl font-bold text-indigo-600 mt-2">0</p>
           </div>
           <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <p class="text-sm text-gray-500 font-medium">Total Subjects</p>
-            <p id="statSubjects" class="text-3xl font-bold text-indigo-600 mt-2">-</p>
+            <p id="statSubjects" class="text-3xl font-bold text-indigo-600 mt-2">0</p>
           </div>
         </div>
       </section>
@@ -59,7 +59,6 @@
       <section id="faculty" class="tab-content hidden space-y-6">
         <h2 class="text-2xl font-bold text-gray-800">Faculty Accounts Management</h2>
         
-        <!-- Register New Faculty Form -->
         <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 max-w-xl">
           <h3 class="text-lg font-semibold mb-4 text-gray-700">Register New Faculty</h3>
           <form id="registerFacultyForm" onsubmit="registerFaculty(event)" class="space-y-4">
@@ -79,7 +78,6 @@
           </form>
         </div>
 
-        <!-- Active Faculty Accounts Table -->
         <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
           <h3 class="text-lg font-semibold mb-4 text-gray-700">Active Faculty Accounts & Credentials</h3>
           <div class="overflow-x-auto">
@@ -91,9 +89,7 @@
                   <th class="py-3 px-4">Joined Date</th>
                 </tr>
               </thead>
-              <tbody id="facultyTableBody" class="divide-y divide-gray-100 text-sm">
-                <!-- Dynamically loaded -->
-              </tbody>
+              <tbody id="facultyTableBody" class="divide-y divide-gray-100 text-sm"></tbody>
             </table>
           </div>
         </div>
@@ -102,30 +98,22 @@
       <!-- 3. CLASSES & STUDENTS SECTION -->
       <section id="classes" class="tab-content hidden space-y-6">
         <h2 class="text-2xl font-bold text-gray-800">Classes & Students Management</h2>
-        
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Create Class Form -->
           <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <h3 class="text-lg font-semibold mb-4 text-gray-700">Create New Class</h3>
             <form id="createClassForm" onsubmit="createClass(event)" class="space-y-4">
               <div>
                 <label class="block text-sm font-medium text-gray-700">Class Name (e.g., Grade 10-A)</label>
-                <input type="text" id="classNameInput" required class="mt-1 w-full p-2 border border-gray-300 rounded focus:ring-indigo-500 focus:border-indigo-500">
+                <input type="text" id="classNameInput" required class="mt-1 w-full p-2 border border-gray-300 rounded">
               </div>
               <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded font-medium transition">Create Class</button>
             </form>
           </div>
-
-          <!-- Student Registry Summary -->
           <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <h3 class="text-lg font-semibold mb-4 text-gray-700">Manage Classes List</h3>
-            <div id="classesList" class="space-y-2 max-h-48 overflow-y-auto">
-              <!-- Dynamically loaded -->
-            </div>
+            <div id="classesList" class="space-y-2 max-h-48 overflow-y-auto"></div>
           </div>
         </div>
-
-        <!-- Master Student Directory -->
         <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
           <h3 class="text-lg font-semibold mb-4 text-gray-700">Master Student Directory</h3>
           <div class="overflow-x-auto">
@@ -137,9 +125,7 @@
                   <th class="py-3 px-4">Registered On</th>
                 </tr>
               </thead>
-              <tbody id="studentDirectoryBody" class="divide-y divide-gray-100 text-sm">
-                <!-- Dynamically loaded -->
-              </tbody>
+              <tbody id="studentDirectoryBody" class="divide-y divide-gray-100 text-sm"></tbody>
             </table>
           </div>
         </div>
@@ -148,21 +134,17 @@
       <!-- 4. SUBJECTS & ASSIGNMENTS SECTION -->
       <section id="subjects" class="tab-content hidden space-y-6">
         <h2 class="text-2xl font-bold text-gray-800">Subjects & Assignments</h2>
-
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Create Subject Form -->
           <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <h3 class="text-lg font-semibold mb-4 text-gray-700">Create Subject</h3>
             <form id="createSubjectForm" onsubmit="createSubject(event)" class="space-y-4">
               <div>
                 <label class="block text-sm font-medium text-gray-700">Subject Name (e.g., Physics)</label>
-                <input type="text" id="subjectNameInput" required class="mt-1 w-full p-2 border border-gray-300 rounded focus:ring-indigo-500 focus:border-indigo-500">
+                <input type="text" id="subjectNameInput" required class="mt-1 w-full p-2 border border-gray-300 rounded">
               </div>
               <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded font-medium transition">Create Subject</button>
             </form>
           </div>
-
-          <!-- Assign Class Subject (Exclusive Teacher Enforcement) -->
           <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <h3 class="text-lg font-semibold mb-4 text-gray-700">Assign Teacher to Class Subject</h3>
             <form id="assignTeacherForm" onsubmit="assignTeacher(event)" class="space-y-4">
@@ -182,8 +164,6 @@
             </form>
           </div>
         </div>
-
-        <!-- Active Assignments Table -->
         <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
           <h3 class="text-lg font-semibold mb-4 text-gray-700">Active Assignments</h3>
           <div class="overflow-x-auto">
@@ -195,9 +175,7 @@
                   <th class="py-3 px-4">Assigned Teacher</th>
                 </tr>
               </thead>
-              <tbody id="activeAssignmentsBody" class="divide-y divide-gray-100 text-sm">
-                <!-- Dynamically loaded -->
-              </tbody>
+              <tbody id="activeAssignmentsBody" class="divide-y divide-gray-100 text-sm"></tbody>
             </table>
           </div>
         </div>
@@ -208,37 +186,17 @@
 
   <!-- JavaScript Application Script -->
   <script>
-    // Initialize Supabase Client
+    // TODO: Replace with your actual Supabase URL and Anon Key
     const SUPABASE_URL = 'https://vygfwzldypgzllekspuh.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ5Z2Z3emxkeXBnemxsZWtzcHVoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI0NzU0NzAsImV4cCI6MjEwODA1MTQ3MH0.cKbJG5pJ36tRwqA4gUzfYCXI2wFrPdK-x0lyhbnY0rk';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    // Check Admin Authentication on Load
-    async function checkAdminAuth() {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        window.location.href = 'login.html'; // Redirect to login if not logged in
-        return;
-      }
-
-      // Verify admin role in profiles table
-      const { data: profile, error } = await supabase
-        .from('profiles')
-        .select('role, full_name')
-        .eq('id', session.user.id)
-        .single();
-
-      if (error || !profile || profile.role !== 'admin') {
-        alert('Access Denied: Admin privileges required.');
-        window.location.href = 'login.html';
-        return;
-      }
-
-      document.getElementById('adminEmail').textContent = `${profile.full_name} (Admin)`;
-      loadDashboardData();
+    let supabase = null;
+    try {
+      supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    } catch (e) {
+      console.error('Supabase initialization error:', e);
     }
 
-    // Tab Switching Logic
+    // Tab Switching Logic (Independent of Auth so tabs always respond)
     function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       document.getElementById(tabId).classList.remove('hidden');
@@ -253,157 +211,59 @@
       });
     }
 
-    // Load All Data for Dashboard
+    // Check Admin Authentication safely
+    async function checkAdminAuth() {
+      if (!supabase || SUPABASE_URL.includes('YOUR_SUPABASE_URL')) {
+        document.getElementById('adminEmail').textContent = '⚠️ Update Supabase Keys';
+        return;
+      }
+
+      try {
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        if (sessionError || !session) {
+          document.getElementById('adminEmail').textContent = 'Not logged in (Demo Mode)';
+          return;
+        }
+
+        const { data: profile, error } = await supabase
+          .from('profiles')
+          .select('role, full_name')
+          .eq('id', session.user.id)
+          .single();
+
+        if (error || !profile || profile.role !== 'admin') {
+          document.getElementById('adminEmail').textContent = 'Unauthorized Role';
+          return;
+        }
+
+        document.getElementById('adminEmail').textContent = `${profile.full_name} (Admin)`;
+        loadDashboardData();
+      } catch (err) {
+        console.error('Auth check failed:', err);
+        document.getElementById('adminEmail').textContent = 'Connection Error';
+      }
+    }
+
     async function loadDashboardData() {
-      // 1. Load Analytics Counts
-      const { count: teacherCount } = await supabase.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'teacher');
-      const { count: studentCount } = await supabase.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'student');
-      const { count: classCount } = await supabase.from('classes').select('*', { count: 'exact', head: true });
-      const { count: subjectCount } = await supabase.from('subjects').select('*', { count: 'exact', head: true });
+      if (!supabase) return;
+      try {
+        const { count: teacherCount } = await supabase.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'teacher');
+        const { count: studentCount } = await supabase.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'student');
+        const { count: classCount } = await supabase.from('classes').select('*', { count: 'exact', head: true });
+        const { count: subjectCount } = await supabase.from('subjects').select('*', { count: 'exact', head: true });
 
-      document.getElementById('statTeachers').textContent = teacherCount || 0;
-      document.getElementById('statStudents').textContent = studentCount || 0;
-      document.getElementById('statClasses').textContent = classCount || 0;
-      document.getElementById('statSubjects').textContent = subjectCount || 0;
-
-      // 2. Load Faculty Table & Dropdown
-      const { data: teachers } = await supabase.from('profiles').select('*').eq('role', 'teacher');
-      const facultyTableBody = document.getElementById('facultyTableBody');
-      const assignTeacherSelect = document.getElementById('assignTeacherSelect');
-      
-      facultyTableBody.innerHTML = '';
-      assignTeacherSelect.innerHTML = '<option value="">Select Teacher</option>';
-      
-      if (teachers) {
-        teachers.forEach(t => {
-          facultyTableBody.innerHTML += `<tr class="hover:bg-gray-50"><td class="py-3 px-4 font-medium">${t.full_name}</td><td class="py-3 px-4 text-gray-500 font-mono text-xs">${t.id}</td><td class="py-3 px-4">${new Date(t.created_at).toLocaleDateString()}</td></tr>`;
-          assignTeacherSelect.innerHTML += `<option value="${t.id}">${t.full_name}</option>`;
-        });
-      }
-
-      // 3. Load Students Directory
-      const { data: students } = await supabase.from('profiles').select('*').eq('role', 'student');
-      const studentDirectoryBody = document.getElementById('studentDirectoryBody');
-      studentDirectoryBody.innerHTML = '';
-      if (students) {
-        students.forEach(s => {
-          studentDirectoryBody.innerHTML += `<tr class="hover:bg-gray-50"><td class="py-3 px-4 font-medium">${s.full_name}</td><td class="py-3 px-4 text-gray-500 font-mono text-xs">${s.id}</td><td class="py-3 px-4">${new Date(s.created_at).toLocaleDateString()}</td></tr>`;
-        });
-      }
-
-      // 4. Load Classes
-      const { data: classes } = await supabase.from('classes').select('*');
-      const classesList = document.getElementById('classesList');
-      const assignClassSelect = document.getElementById('assignClassSelect');
-      classesList.innerHTML = '';
-      assignClassSelect.innerHTML = '<option value="">Select Class</option>';
-      if (classes) {
-        classes.forEach(c => {
-          classesList.innerHTML += `<div class="p-2 bg-gray-50 rounded border border-gray-100 flex justify-between items-center"><span class="font-medium">${c.class_name}</span></div>`;
-          assignClassSelect.innerHTML += `<option value="${c.id}">${c.class_name}</option>`;
-        });
-      }
-
-      // 5. Load Subjects
-      const { data: subjects } = await supabase.from('subjects').select('*');
-      const assignSubjectSelect = document.getElementById('assignSubjectSelect');
-      assignSubjectSelect.innerHTML = '<option value="">Select Subject</option>';
-      if (subjects) {
-        subjects.forEach(sub => {
-          assignSubjectSelect.innerHTML += `<option value="${sub.id}">${sub.subject_name}</option>`;
-        });
-      }
-
-      // 6. Load Active Assignments
-      const { data: assignments } = await supabase.from('teacher_assignments').select(`
-        id,
-        classes ( class_name ),
-        subjects ( subject_name ),
-        profiles ( full_name )
-      `);
-      const activeAssignmentsBody = document.getElementById('activeAssignmentsBody');
-      activeAssignmentsBody.innerHTML = '';
-      if (assignments) {
-        assignments.forEach(a => {
-          activeAssignmentsBody.innerHTML += `<tr class="hover:bg-gray-50"><td class="py-3 px-4 font-medium">${a.classes?.class_name || 'N/A'}</td><td class="py-3 px-4">${a.subjects?.subject_name || 'N/A'}</td><td class="py-3 px-4 text-indigo-600 font-medium">${a.profiles?.full_name || 'N/A'}</td></tr>`;
-        });
-      }
-    }
-
-    // --- Action Handlers ---
-
-    async function registerFaculty(event) {
-      event.preventDefault();
-      const name = document.getElementById('facultyName').value;
-      const email = document.getElementById('facultyEmail').value;
-      const password = document.getElementById('facultyPassword').value;
-
-      // Note: Creating user via signUp will log the admin out unless using Supabase Admin API / Edge Function.
-      // Alternatively, you can create them directly or via Supabase Auth.
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: { data: { full_name: name, role: 'teacher' } }
-      });
-
-      if (error) {
-        alert('Error registering faculty: ' + error.message);
-      } else {
-        alert('Faculty account registered successfully!');
-        document.getElementById('registerFacultyForm').reset();
-        loadDashboardData();
-      }
-    }
-
-    async function createClass(event) {
-      event.preventDefault();
-      const className = document.getElementById('classNameInput').value;
-      const { error } = await supabase.from('classes').insert([{ class_name: className }]);
-      if (error) {
-        alert('Error creating class: ' + error.message);
-      } else {
-        alert('Class created successfully!');
-        document.getElementById('createClassForm').reset();
-        loadDashboardData();
-      }
-    }
-
-    async function createSubject(event) {
-      event.preventDefault();
-      const subjectName = document.getElementById('subjectNameInput').value;
-      const { error } = await supabase.from('subjects').insert([{ subject_name: subjectName }]);
-      if (error) {
-        alert('Error creating subject: ' + error.message);
-      } else {
-        alert('Subject created successfully!');
-        document.getElementById('createSubjectForm').reset();
-        loadDashboardData();
-      }
-    }
-
-    async function assignTeacher(event) {
-      event.preventDefault();
-      const class_id = document.getElementById('assignClassSelect').value;
-      const subject_id = document.getElementById('assignSubjectSelect').value;
-      const teacher_id = document.getElementById('assignTeacherSelect').value;
-
-      const { error } = await supabase.from('teacher_assignments').upsert(
-        [{ class_id, subject_id, teacher_id }],
-        { onConflict: 'subject_id,class_id' } // Respects unique constraint for exclusive teacher enforcement
-      );
-
-      if (error) {
-        alert('Error assigning teacher: ' + error.message);
-      } else {
-        alert('Teacher assigned successfully!');
-        document.getElementById('assignTeacherForm').reset();
-        loadDashboardData();
+        document.getElementById('statTeachers').textContent = teacherCount || 0;
+        document.getElementById('statStudents').textContent = studentCount || 0;
+        document.getElementById('statClasses').textContent = classCount || 0;
+        document.getElementById('statSubjects').textContent = subjectCount || 0;
+      } catch (e) {
+        console.error('Error loading dashboard data:', e);
       }
     }
 
     async function logout() {
-      await supabase.auth.signOut();
-      window.location.href = 'login.html';
+      if (supabase) await supabase.auth.signOut();
+      alert('Logged out successfully.');
     }
 
     // Run auth check on page load
